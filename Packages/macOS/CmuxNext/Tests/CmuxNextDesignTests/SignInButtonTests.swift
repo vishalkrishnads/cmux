@@ -8,9 +8,11 @@ import Testing
 /// Sign In button every such place shows takes its size from the density tokens, so it sits with the
 /// controls around it at every density, and a click runs the sign-in that place passes.
 @Suite @MainActor struct SignInButtonTests {
+    /// Every density is Default scaled by one factor (#44449): Compact is 0.9 of Default, its height and room rounded to
+    /// whole points.
     @Test func compactIsAControlsSize() {
         #expect(SignInButtonMetrics(density: DensityPreset.compact.tokens, cornerRadius: 6)
-            == SignInButtonMetrics(height: 24, paddingX: 10, cornerRadius: 6, textSize: 12))
+            == SignInButtonMetrics(height: 25, paddingX: 9, cornerRadius: 6, textSize: 12.6))
     }
 
     @Test func levelOneIsAComfortableControlsSize() {
@@ -22,7 +24,8 @@ import Testing
         let ultra = SignInButtonMetrics(density: DensityPreset.ultraCompact.tokens, cornerRadius: 6)
         let spacious = SignInButtonMetrics(density: DensityTokens(id: "roomy", name: "Roomy", level: 1.75, spacing: 1.25),
                                            cornerRadius: 8)
-        #expect(ultra == SignInButtonMetrics(height: 21, paddingX: 8, cornerRadius: 6, textSize: 11.5))
+        // Ultra-compact is 0.8 of Default (#44449).
+        #expect(ultra == SignInButtonMetrics(height: 22, paddingX: 8, cornerRadius: 6, textSize: 11.2))
         #expect(spacious == SignInButtonMetrics(height: 35, paddingX: 13, cornerRadius: 8, textSize: 14))
     }
 
